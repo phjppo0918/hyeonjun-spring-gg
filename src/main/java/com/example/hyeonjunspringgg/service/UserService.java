@@ -1,13 +1,14 @@
 package com.example.hyeonjunspringgg.service;
 
+import com.example.hyeonjunspringgg.dto.AuthResponseDTO;
 import com.example.hyeonjunspringgg.dto.CreateUserRequestDTO;
 import com.example.hyeonjunspringgg.dto.LoginRequestDTO;
-import com.example.hyeonjunspringgg.dto.AuthResponseDTO;
 import com.example.hyeonjunspringgg.dto.UserResponseDTO;
 import com.example.hyeonjunspringgg.dto.oauth2.OAuthUserDTO;
 import com.example.hyeonjunspringgg.entity.User;
 import com.example.hyeonjunspringgg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
     public List<UserResponseDTO> getAll() {
         List<User> targets =userRepository.findAll();
         return targets.stream()
@@ -37,6 +40,8 @@ public class UserService {
         if(!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new AuthException();
         }
+
+       // UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getAccountId(), dto.getPassword());
 
         return new AuthResponseDTO(user);
     }

@@ -1,7 +1,7 @@
 package com.example.hyeonjunspringgg.config.security.jwt;
 
-import com.example.hyeonjunspringgg.dto.JWTTokenDTO;
 import com.example.hyeonjunspringgg.dto.AuthResponseDTO;
+import com.example.hyeonjunspringgg.dto.JWTTokenDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -39,11 +39,20 @@ public class JwtTokenProvider {
     private Claims getClaims(AuthResponseDTO user) {
         Claims claims = Jwts.claims();
         claims.put("id", user.getId());
+        claims.put("accountId", user.getAccountId());
         claims.put("nickname", user.getNickname());
         claims.put("role", user.getRole());
 
         return claims;
     }
+
+    /**
+     *
+     * @param user
+     * @param claims
+     * @param validationSecond
+     * @return
+     */
 
     private String getToken(AuthResponseDTO user, Claims claims, Long validationSecond) {
         long now = new Date().getTime();

@@ -4,8 +4,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -13,7 +18,7 @@ import javax.persistence.*;
 /**
  * @author 현준
  */
-public class User {
+public class User implements UserDetails {
 
 
     @Id
@@ -69,4 +74,35 @@ public class User {
         baseTimeEntity.delete();
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority(this.authority.name()));
+        return grantedAuthorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return accountId;
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

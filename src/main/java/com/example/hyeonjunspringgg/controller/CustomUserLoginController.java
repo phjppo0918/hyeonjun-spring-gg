@@ -38,8 +38,9 @@ public class CustomUserLoginController {
     }
     @PostMapping("login")
     public ResponseEntity<JWTTokenDTO> login(@RequestBody LoginRequestDTO dto,
-                                             HttpServletResponse response) throws AuthException {
+                                               HttpServletResponse response) throws AuthException {
         JWTTokenDTO tokenDto = authService.getJwtToken(dto);
+
         authService.addJwtTokensInCookie(response, tokenDto);
         return ResponseEntity.ok(tokenDto);
     }

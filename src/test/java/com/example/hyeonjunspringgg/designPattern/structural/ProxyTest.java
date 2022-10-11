@@ -12,12 +12,13 @@ class ServiceImpl implements ServiceEx {
     }
 }
 
-class Proxy implements  ServiceEx {
+class Proxy implements ServiceEx {
     ServiceEx serviceEx;
 
     @Override
     public String runService() {
         //무언가 추가 ㄴㅇㄹㅁㄹㅁㄹㅉㄸ!
+
         serviceEx = new ServiceImpl();
         return serviceEx.runService();
     }

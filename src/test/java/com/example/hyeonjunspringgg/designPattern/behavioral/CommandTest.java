@@ -42,11 +42,10 @@ class LampOnCommand implements Command {
 public class CommandTest {
     void test() {
         Lamp lamp = new Lamp();
-    Command lampOnCommand = new LampOnCommand(lamp);
-    Button button = new Button(lampOnCommand);
+        Command lampOnCommand = new LampOnCommand(lamp);
+        Button button = new Button(lampOnCommand);
 
-    button.pressed();
-
+        button.pressed();
     }
 
 }
